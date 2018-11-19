@@ -20,6 +20,13 @@ then
     $1 composer.phar require cakedc/users
   fi;
 
+  if [ -e plugins/BaseApp/src ]
+  then
+    echo "BaseApp plugin already exists. No need to download."
+  else
+    git submodule update --init --recursive
+  fi;
+
   $1 bin/cake.php migrations migrate -p BaseApp
   $1 bin/cake.php migrations migrate -p CakeDC/Users
   $1 bin/cake.php migrations seed --plugin BaseApp
